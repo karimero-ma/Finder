@@ -1,8 +1,6 @@
 package jp.co.km.finder;
 
 import java.io.IOException;
-import java.nio.file.FileSystem;
-import java.nio.file.FileSystems;
 import java.nio.file.FileVisitOption;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
@@ -44,17 +42,14 @@ public class FileVisitorImpl extends SimpleFileVisitor<Path> {
 	 * @throws IOException
 	 */
 	public static List<Path> createFileList(FindCommand fc) throws IOException{
-		FileSystem fs = FileSystems.getDefault();
-		Path startPath = fs.getPath(fc.getPath());
-
 		FileVisitorImpl visitor = new FileVisitorImpl(fc);
 
 		if(fc.isRecursive()){
-			Files.walkFileTree(startPath, visitor);
+			Files.walkFileTree(fc.getPath(), visitor);
 		}else{
 			Set<FileVisitOption> options = EnumSet.allOf(FileVisitOption.class);
 			int maxDepth = 1;
-			Files.walkFileTree(startPath, options, maxDepth, visitor);
+			Files.walkFileTree(fc.getPath(), options, maxDepth, visitor);
 		}
 		log.debug("accept files {}", visitor.getAcceptFiles());		
 		return visitor.getAcceptFiles();

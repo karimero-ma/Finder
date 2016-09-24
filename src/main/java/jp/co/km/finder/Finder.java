@@ -6,6 +6,7 @@ import java.io.LineNumberReader;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -17,40 +18,31 @@ public class Finder {
 
 	private static Logger log = LoggerFactory.getLogger(Finder.class);
 
-	public void find(FindCommand fc) {
+	public List<Result> find(FindCommand fc) {
+		if(! fc.getPath().toFile().exists()){
+			log.error("指定されたパスが見つかりません。 {}", fc.getPath());
+		}
+		
 		List<Path> paths = null;
+		log.debug("ファイル候補の取得開始");
 		try {
 			paths = FileVisitorImpl.createFileList(fc);
+			
+			if (paths.isEmpty()) {
+				log.info("対象ファイルがありません");
+				return Collections.emptyList();
+			}else if (log.isDebugEnabled()) {
+				paths.stream().forEach(p -> log.debug(p.toString()));
+			}
 		} catch (IOException e) {
 			log.error("ファイルリストの取得に失敗", e);
-			return;
+			return Collections.emptyList();
 		}
-		log.info("ファイル候補の取得終了");
+		log.debug("ファイル候補の取得終了");
 
-		if (paths.isEmpty()) {
-			log.info("対象ファイルがありません");
-			return;
-		}
-
-		if (log.isDebugEnabled()) {
-			paths.stream().forEach(p -> log.debug(p.toString()));
-		}
-
-		log.info("一致する文字列の検索");
-		List<Result> results = phaseFindText(fc, paths);
-
-		log.info("----------- 結果の出力 -----------");
-		results.stream().filter(r -> r.isSuccess() && !r.getLines().isEmpty())
-				.forEach(r -> printResult(r));
-	}
-
-	private void printResult(Result r) {
-		r.getLines().stream()
-				.forEach(l -> log.info("{} : {}", l.getNo(), l.getText()));
-	}
-
-	private List<Result> phaseFindText(FindCommand fc, List<Path> paths) {
-		return paths.stream().map(path -> parse(fc, path))
+		log.debug("一致する文字列の検索");
+		return paths.stream()
+				.map(path -> parse(fc, path))
 				.collect(Collectors.toList());
 	}
 

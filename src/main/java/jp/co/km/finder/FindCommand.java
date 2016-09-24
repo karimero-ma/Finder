@@ -1,5 +1,8 @@
 package jp.co.km.finder;
 
+import java.nio.file.FileSystem;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.regex.Pattern;
@@ -30,7 +33,7 @@ public class FindCommand {
 	/** 
 	 * 検索するフォルダ
 	 */
-	private String path;
+	private Path path;
 	
 	/**
 	 * サブディレクトリも対象とするか否か
@@ -103,12 +106,13 @@ public class FindCommand {
 		this.pattern = keyword;
 	}
 
-	public String getPath() {
+	public Path getPath() {
 		return path;
 	}
 
 	public void setPath(String path) {
-		this.path = path;
+		FileSystem fs = FileSystems.getDefault();
+		this.path = fs.getPath(path);
 	}
 	public String getNameFilter() {
 		return nameFilter;
