@@ -12,6 +12,8 @@ public class Result implements Serializable {
 	private Path path;
 	
 	private List<Line> lines = new ArrayList<Line>();
+	
+	private boolean isSuccess = false;
 
 	public Path getPath() {
 		return path;
@@ -58,5 +60,13 @@ public class Result implements Serializable {
 		void setText(String text) {
 			this.text = text;
 		}
+	}
+
+	public boolean isSuccess() {
+		return isSuccess;
+	}
+
+	public void setSuccess(boolean isSuccess) {
+		this.isSuccess = isSuccess;
 	}
 }
