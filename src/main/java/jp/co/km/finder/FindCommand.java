@@ -13,6 +13,8 @@ import org.slf4j.LoggerFactory;
  */
 public class FindCommand {
 	
+	private static Logger log = LoggerFactory.getLogger(FindCommand.class);
+
 	/**
 	 * 検索時のオプション
 	 */
@@ -24,8 +26,6 @@ public class FindCommand {
 		/** 大文字、小文字を区別する */
 		, CASE_INSENSITIVE
 	}
-	
-	private static Logger log = LoggerFactory.getLogger(FindCommand.class);
 
 	/** 検索する文字列 */
 	private String pattern;
@@ -86,7 +86,7 @@ public class FindCommand {
 		}
 		
 		if(StringUtils.isNotEmpty(right) && !path.endsWith(right)){
-			log.debug("no accept {}. bat was no endst with '{}'", path, right);
+			log.debug("no accept {}. bat was no ends with '{}'", path, right);
 			return false;
 		}
 		

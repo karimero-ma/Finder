@@ -47,11 +47,11 @@ public class Arguments {
 				return;
 			}
 			
-			if(cl.getArgs().length < 2){
+			final int minArgs = 2; // patterh + path
+			if(cl.getArgs().length < minArgs){
 				throw new ParseException("");
 			}
 		} catch (ParseException e) {
-			printHelp();
 			return;
 		}
 		arrow = true;

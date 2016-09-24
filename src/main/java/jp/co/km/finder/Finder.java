@@ -9,8 +9,6 @@ import java.nio.file.Path;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import jp.co.km.io.FileUtils;
-
 import org.mozilla.universalchardet.UniversalDetector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,18 +17,10 @@ public class Finder {
 
 	private static Logger log = LoggerFactory.getLogger(Finder.class);
 
-	public static void main(String[] args) {
-		Arguments a = new Arguments();
-		a.populate(args);
-		if(a.arrow()){
-			new Finder().find(a.toFindCommand());
-		}
-	}
-
-	private void find(FindCommand fc) {
+	public void find(FindCommand fc) {
 		List<Path> paths = null;
 		try {
-			paths = FileUtils.createFileList(fc);
+			paths = FileVisitorImpl.createFileList(fc);
 		} catch (IOException e) {
 			log.error("ファイルリストの取得に失敗", e);
 			return;
@@ -109,6 +99,7 @@ public class Finder {
 		}
 		log.debug("{} : charset = {}", path.getFileName(), result);
 
+		if(result == null) result = "MS932"; //TODO:暫定対応
 		return result;
 	}
 }
