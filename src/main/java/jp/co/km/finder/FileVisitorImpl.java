@@ -65,7 +65,8 @@ public class FileVisitorImpl extends SimpleFileVisitor<Path> {
 	 * ファイル名が指定されたフィルター文字列に適合するか判定する処理を追加するためオーバーライドする
 	 */
 	public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-		if(fc.accecpt(file.getFileName().toString())){
+		if(!file.toFile().isDirectory()
+				&& fc.accecpt(file.getFileName().toString())){
 			acceptFiles.add(file);
 		}
 		return FileVisitResult.CONTINUE;
