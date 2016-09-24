@@ -2,10 +2,7 @@ package jp.co.km.finder;
 
 import java.util.HashSet;
 import java.util.Set;
-
-import org.apache.commons.lang.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.util.regex.Pattern;
 
 /**
  * ファイルの検索条件を表現するクラス
@@ -13,7 +10,7 @@ import org.slf4j.LoggerFactory;
  */
 public class FindCommand {
 	
-	private static Logger log = LoggerFactory.getLogger(FindCommand.class);
+//	private static Logger log = LoggerFactory.getLogger(FindCommand.class);
 
 	/**
 	 * 検索時のオプション
@@ -52,46 +49,20 @@ public class FindCommand {
 	/** 指定された検索オプション */
 	private Set<SEARCH_OPTION> searchOptions = new HashSet<>();
 	
+	private Pattern regexPattern;
+	
+	private FindHelper helper;
+	
+	public FindCommand(){
+		helper = new FindHelper(this);
+	}
 	/**
 	 * 指定されたファイルパスの文字列が検索対象のファイルの場合にtrueを返す
 	 * @param path
 	 * @return
 	 */
 	public boolean accecpt(String path){
-		if(StringUtils.isEmpty(nameFilter)){
-			log.debug("accept! {}. no specify file name rule.", path);
-			return true;
-		}
-		
-		int wildCardIdx = nameFilter.indexOf("*");
-		log.debug("wildCardIdx = {}", wildCardIdx);
-		
-		if(wildCardIdx < 0){
-			//ワイルドカード指定なし
-			return StringUtils.equals(path, nameFilter);
-		}
-		
-		//ワイルドカードありの場合は、ワイルドカード前後の文字列が一致するか確認する
-		String left = StringUtils.left(nameFilter
-				, nameFilter.substring(0, wildCardIdx).length());
-		log.trace("left = {}", left);
-		
-		String right = StringUtils.right(nameFilter, 
-				nameFilter.substring(wildCardIdx + 1).length());
-		log.trace("right ={}", right);
-		
-		if(StringUtils.isNotEmpty(left) && !path.startsWith(left)){
-			log.debug("no accept {}. bat was no starts with '{}'", path, left);
-			return false;
-		}
-		
-		if(StringUtils.isNotEmpty(right) && !path.endsWith(right)){
-			log.debug("no accept {}. bat was no ends with '{}'", path, right);
-			return false;
-		}
-		
-		log.debug("accept! {}.", path);
-		return true;
+		return helper.accept(path);
 	}
 	
 	/**
@@ -100,7 +71,7 @@ public class FindCommand {
 	 * @return
 	 */
 	public boolean match(String line){
-		return line.indexOf(pattern) >= 0;
+		return helper.match(line);
 	}
 
 	/**
@@ -161,6 +132,13 @@ public class FindCommand {
 	 */
 	public void setRecursive(boolean isRecursive) {
 		this.isRecursive = isRecursive;
+	}
+	
+	public Pattern getRegexPattern() {
+		if(regexPattern == null){
+			regexPattern = Pattern.compile(pattern);
+		}
+		return regexPattern;
 	}
 
 	@Override
