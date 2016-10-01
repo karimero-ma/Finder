@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.web.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.paint.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="610.0" prefWidth="781.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jp.co.km.finder.UiController">
+   <children>
+      <SplitPane dividerPositions="0.40460526315789475" layoutX="7.0" layoutY="11.0" orientation="VERTICAL" prefHeight="520.0" prefWidth="776.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="260.0" prefWidth="807.0">
+               <children>
+                  <TextField fx:id="pathTxt" layoutX="14.0" layoutY="22.0" prefHeight="47.0" prefWidth="605.0" promptText="パス" />
+                  <Button fx:id="choosePathBtn" layoutX="619.0" layoutY="22.0" mnemonicParsing="false" onAction="#onclickChoosePathBtn" prefHeight="47.0" prefWidth="139.0" text="選択" />
+                  <TextField fx:id="patternTxt" layoutX="14.0" layoutY="104.0" prefHeight="47.0" prefWidth="605.0" promptText="検索文字列" />
+                  <ToggleButton layoutX="668.0" layoutY="181.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="47.0" style="-fx-font-weight: bold;" text=".*">
+                     <font>
+                        <Font name="Impact" size="14.0" />
+                     </font>
+                  </ToggleButton>
+                  <ToggleButton layoutX="621.0" layoutY="181.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="47.0" style="-fx-font-weight: bold;" text="Aa" />
+                  <ToggleButton layoutX="715.0" layoutY="181.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="47.0" style="-fx-font-weight: bold;" text="W" />
+                  <Button fx:id="findBtn" layoutX="619.0" layoutY="104.0" mnemonicParsing="false" onAction="#onclickFindBtn" prefHeight="47.0" prefWidth="139.0" style="-fx-background-color: #5f76d9;" text="検索" textFill="WHITE" />
+                  <CheckBox fx:id="recursiveCheckBox" layoutX="31.0" layoutY="196.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="174.0" text="サブフォルダーを含む" />
+                  <ComboBox fx:id="nameFilterComboBox" editable="true" layoutX="205.0" layoutY="182.0" prefHeight="47.0" prefWidth="415.0" promptText="ファイルのフィルター" />
+               </children>
+            </AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="264.0" prefWidth="774.0">
+               <children>
+                  <TextArea fx:id="resultTextArea" layoutX="8.0" layoutY="6.0" prefHeight="162.0" prefWidth="765.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+               </children></AnchorPane>
+        </items>
+      </SplitPane>
+   </children>
+</AnchorPane>
