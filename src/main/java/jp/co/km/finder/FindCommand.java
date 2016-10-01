@@ -37,7 +37,6 @@ public class FindCommand {
 	
 	/**
 	 * サブディレクトリも対象とするか否か
-	 * TODO:要実装
 	 */
 	private boolean isRecursive = false;
 
@@ -59,6 +58,7 @@ public class FindCommand {
 	public FindCommand(){
 		helper = new FindHelper(this);
 	}
+	
 	/**
 	 * 指定されたファイルパスの文字列が検索対象のファイルの場合にtrueを返す
 	 * @param path
@@ -102,24 +102,27 @@ public class FindCommand {
 		return pattern;
 	}
 
-	public void setPattern(String keyword) {
+	public FindCommand setPattern(String keyword) {
 		this.pattern = keyword;
+		return this;
 	}
 
 	public Path getPath() {
 		return path;
 	}
 
-	public void setPath(String path) {
+	public FindCommand setPath(String path) {
 		FileSystem fs = FileSystems.getDefault();
 		this.path = fs.getPath(path);
+		return this;
 	}
 	public String getNameFilter() {
 		return nameFilter;
 	}
 
-	public void setNameFilter(String nameFilter) {
+	public FindCommand setNameFilter(String nameFilter) {
 		this.nameFilter = nameFilter;
+		return this;
 	}
 
 	/**
@@ -134,8 +137,9 @@ public class FindCommand {
 	 * サブフォルダーを検索するか否かを設定する
 	 * @return
 	 */
-	public void setRecursive(boolean isRecursive) {
+	public FindCommand setRecursive(boolean isRecursive) {
 		this.isRecursive = isRecursive;
+		return this;
 	}
 	
 	public Pattern getRegexPattern() {
