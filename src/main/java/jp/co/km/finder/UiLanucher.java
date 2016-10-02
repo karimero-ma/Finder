@@ -18,6 +18,8 @@ public class UiLanucher extends Application{
 
 		Scene scene = new Scene(root);
 		stage.setScene(scene);
+		
+		scene.getStylesheets().add(getClass().getResource("/view/Application.css").toExternalForm());
 
 		stage.show();
 	}
