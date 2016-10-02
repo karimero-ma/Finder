@@ -1,5 +1,6 @@
 package jp.co.km.finder;
 
+import java.io.Serializable;
 import java.nio.file.FileSystem;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
@@ -11,8 +12,13 @@ import java.util.regex.Pattern;
  * ファイルの検索条件を表現するクラス
  *
  */
-public class FindCommand {
+public class FindCommand implements Serializable {
 	
+/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 //	private static Logger log = LoggerFactory.getLogger(FindCommand.class);
 
 	/**

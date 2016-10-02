@@ -27,7 +27,6 @@ public class Finder {
 		log.debug("ファイル候補の取得開始");
 		try {
 			paths = FileVisitorImpl.createFileList(fc);
-			
 			if (paths.isEmpty()) {
 				log.info("対象ファイルがありません");
 				return Collections.emptyList();
@@ -57,6 +56,7 @@ public class Finder {
 			log.error("faild to retrive a charset {}", path);
 			return r;
 		}
+		
 		log.debug("ファイルの読み込み開始 {}", path);
 		try (LineNumberReader reader = new LineNumberReader(
 				Files.newBufferedReader(path, Charset.forName(charsetName)))) {
@@ -75,7 +75,6 @@ public class Finder {
 	}
 
 	public String getCharset(Path path) throws IOException {
-		String result = null;
 		byte[] buf = new byte[4096];
 		try (FileInputStream fis = new FileInputStream(path.toFile())) {
 			UniversalDetector detector = new UniversalDetector(null);
@@ -86,12 +85,16 @@ public class Finder {
 			}
 			detector.dataEnd();
 
-			result = detector.getDetectedCharset();
-			detector.reset();
-		}
-		log.debug("{} : charset = {}", path.getFileName(), result);
+			String result = detector.getDetectedCharset();
+			log.debug("{} : charset = {}", path.getFileName(), result);
 
-		if(result == null) result = "MS932"; //TODO:暫定対応
-		return result;
+			detector.reset();
+
+			if(result != null){
+				return result;
+			}
+		}
+
+		return "MS932"; //TODO:暫定対応;
 	}
 }
