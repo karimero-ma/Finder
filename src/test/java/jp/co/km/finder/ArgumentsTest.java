@@ -10,8 +10,7 @@ public class ArgumentsTest {
 
 	@Test
 	public void 最少引数() {
-		Arguments a = new Arguments();
-		a.populate(new String[]{"hoge", "hogehoge"});
+		Arguments a = new Arguments(new String[]{"hoge", "hogehoge"});
 		FindCommand f = a.toFindCommand();
 		assertThat(f.getPattern(), is("hoge"));
 		assertThat(f.getPath(), is("hogehoge"));
@@ -23,8 +22,7 @@ public class ArgumentsTest {
 
 	@Test
 	public void 正規表現を指定() {
-		Arguments a = new Arguments();
-		a.populate(new String[]{"-x", "hoge", "hogehoge"});
+		Arguments a = new Arguments(new String[]{"-x", "hoge", "hogehoge"});
 		FindCommand f = a.toFindCommand();
 		assertThat(f.getPattern(), is("hoge"));
 		assertThat(f.getPath(), is("hogehoge"));
@@ -35,8 +33,7 @@ public class ArgumentsTest {
 	
 	@Test
 	public void 単語単位を指定() {
-		Arguments a = new Arguments();
-		a.populate(new String[]{"-w", "hoge", "hogehoge"});
+		Arguments a = new Arguments(new String[]{"-w", "hoge", "hogehoge"});
 		FindCommand f = a.toFindCommand();
 		assertThat(f.getPattern(), is("hoge"));
 		assertThat(f.getPath(), is("hogehoge"));
@@ -47,8 +44,7 @@ public class ArgumentsTest {
 	
 	@Test
 	public void 大文字小文字無視を指定() {
-		Arguments a = new Arguments();
-		a.populate(new String[]{"-i", "hoge", "hogehoge"});
+		Arguments a = new Arguments(new String[]{"-i", "hoge", "hogehoge"});
 		FindCommand f = a.toFindCommand();
 		assertThat(f.getPattern(), is("hoge"));
 		assertThat(f.getPath(), is("hogehoge"));
@@ -59,8 +55,7 @@ public class ArgumentsTest {
 	
 	@Test
 	public void ファイル名パターンを指定() {
-		Arguments a = new Arguments();
-		a.populate(new String[]{"-f", "*.hoge", "hoge", "hogehoge"});
+		Arguments a = new Arguments(new String[]{"-f", "*.hoge", "hoge", "hogehoge"});
 		FindCommand f = a.toFindCommand();
 		assertThat(f.getPattern(), is("hoge"));
 		assertThat(f.getPath(), is("hogehoge"));
@@ -73,8 +68,7 @@ public class ArgumentsTest {
 	
 	@Test
 	public void ファイル名パターンを指定_値なし() {
-		Arguments a = new Arguments();
-		a.populate(new String[]{"-f", "hoge", "hogehoge"});
+		Arguments a = new Arguments(new String[]{"-f", "hoge", "hogehoge"});
 		assertThat(a.arrow(), is(false));
 	}
 }
