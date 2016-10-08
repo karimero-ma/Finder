@@ -11,8 +11,7 @@ public class FinderCli {
 	private static Logger log = LoggerFactory.getLogger(FinderCli.class);
 
 	public static void main(String[] args) {
-		Arguments a = new Arguments();
-		a.populate(args);
+		Arguments a = new Arguments(args);
 		
 		if(!a.arrow()){
 			a.printHelp();

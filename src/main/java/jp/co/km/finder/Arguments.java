@@ -31,12 +31,16 @@ public class Arguments {
 			.addOption(Option.builder("x").argName("--regex").desc("正規表現を使用").build())
 			.addOption(Option.builder("w").argName("--word unit").desc("単語単位で検索").build());
 	}
+	
+	public Arguments(String[] args){
+		this.populate(args);
+	}
 
 	/**
 	 * 起動時の引数を解析する。解析が成功すると、<code>arrow()</code>の戻り値がtrueとなり検索が実行される。
 	 * @param args 起動時の引数
 	 */
-	public void populate(String[] args){
+	private void populate(String[] args){
 		log.debug("args = {}", String.join(",", args));
 		DefaultParser parser = new DefaultParser();
 		try {
