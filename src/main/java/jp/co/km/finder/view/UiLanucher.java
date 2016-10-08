@@ -1,4 +1,4 @@
-package jp.co.km.finder;
+package jp.co.km.finder.view;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

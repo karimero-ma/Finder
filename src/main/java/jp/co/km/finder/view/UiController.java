@@ -1,4 +1,4 @@
-package jp.co.km.finder;
+package jp.co.km.finder.view;
 
 import java.io.File;
 import java.util.List;
@@ -17,6 +17,10 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.stage.DirectoryChooser;
+import jp.co.km.finder.FindCommand;
+import jp.co.km.finder.Finder;
+import jp.co.km.finder.InvalidFileCommandException;
+import jp.co.km.finder.Result;
 import jp.co.km.finder.FindCommand.SEARCH_OPTION;
 
 public class UiController {
