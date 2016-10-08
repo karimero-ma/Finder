@@ -34,7 +34,6 @@ public class Arguments {
 
 	/**
 	 * 起動時の引数を解析する。解析が成功すると、<code>arrow()</code>の戻り値がtrueとなり検索が実行される。
-	 * 引数の解析に失敗したり、ヘルプメニューが要求されていると標準出力にヘルプを表示して処理を終了する。
 	 * @param args 起動時の引数
 	 */
 	public void populate(String[] args){
@@ -43,7 +42,6 @@ public class Arguments {
 		try {
 			cl = parser.parse(opts, args);
 			if(cl.hasOption("-h")){
-				printHelp();
 				return;
 			}
 			
