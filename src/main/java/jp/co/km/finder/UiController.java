@@ -7,6 +7,8 @@ import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -22,6 +24,11 @@ public class UiController {
 	private static final String LINE_SEPARATOR = System.getProperty("line.separator");
 
 	private static final Logger log = LoggerFactory.getLogger(UiController.class);
+	
+	private static final ObservableList<String> EXTENTIONS 
+		= FXCollections.observableArrayList(
+		"*.*", "*.txt", "*.html", "*.css", "*.scss"
+		, "*.csv", "*.js", "*.java", "*.jsp", "*.xml");
 
 	@FXML
 	TextField pathTxt;
@@ -55,8 +62,7 @@ public class UiController {
 
 	@FXML
 	void initialize(){
-		resultTextArea.appendText("初期化文字列");
-		
+		nameFilterComboBox.setItems(EXTENTIONS);
 	}
 	
 	@FXML
@@ -64,9 +70,6 @@ public class UiController {
 		log.info("call onclickFindBtn");
 		
 		resultTextArea.clear();
-		
-		resultTextArea.appendText("検索　開始 …");
-		resultTextArea.appendText(LINE_SEPARATOR);
 		
 		FindCommand fc = new FindCommand();
 		fc.setPath(pathTxt.getText())
@@ -87,6 +90,16 @@ public class UiController {
 		}
 				
 		log.info(fc.toString());
+		
+		try{
+			fc.validateRequired();
+		}catch (InvalidFileCommandException e) {
+			println("検索文字列を指定してください");
+			return;
+		}
+		
+		println("検索　開始 …");
+		
 		List<Result> results = new Finder().find(fc);
 		
 		results.forEach(r -> {
@@ -97,8 +110,7 @@ public class UiController {
 				.forEach(l -> resultsBuf.append(String.format("%s : %s%s", l.getNo(), l.getText().trim(), LINE_SEPARATOR)));
 			resultTextArea.appendText(resultsBuf.toString());
 		});
-		resultTextArea.appendText("検索　終了");
-		resultTextArea.appendText(LINE_SEPARATOR);
+		println("検索　終了");
 	}
 	
 	@FXML
@@ -113,6 +125,11 @@ public class UiController {
 		if(chooseDir != null){
 			pathTxt.setText(chooseDir.getAbsolutePath());
 		}
+	}
+	
+	private void println(String text){
+		resultTextArea.appendText(text);
+		resultTextArea.appendText(LINE_SEPARATOR);
 	}
 }
 

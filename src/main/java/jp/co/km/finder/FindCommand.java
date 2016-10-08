@@ -8,6 +8,8 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.regex.Pattern;
 
+import org.apache.commons.lang.StringUtils;
+
 /**
  * ファイルの検索条件を表現するクラス
  *
@@ -100,6 +102,12 @@ public class FindCommand implements Serializable {
 	 */
 	public boolean use(SEARCH_OPTION option){
 		return searchOptions.contains(option);
+	}
+	
+	public void validateRequired() throws InvalidFileCommandException{
+		if(StringUtils.isEmpty(pattern)){
+			throw new InvalidFileCommandException("[pattern] can not be null");
+		}
 	}
 	
 	/* ---- getter setter ---- */
