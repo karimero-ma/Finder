@@ -35,7 +35,7 @@ public class Result implements Serializable {
 		return new Line(no, text);
 	}
 	
-	static class Line{
+	public static class Line{
 		Line(long no, String text){
 			this.no = no;
 			this.text = text;

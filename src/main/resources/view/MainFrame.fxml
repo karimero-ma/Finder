@@ -8,9 +8,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="610.0" prefWidth="593.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jp.co.km.finder.UiController">
+<AnchorPane prefHeight="610.0" prefWidth="593.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jp.co.km.finder.view.UiController">
    <children>
-      <SplitPane dividerPositions="0.4194078947368421" layoutX="7.0" layoutY="11.0" orientation="VERTICAL" prefHeight="610.0" prefWidth="586.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <SplitPane dividerPositions="0.46381578947368424" layoutX="7.0" layoutY="11.0" orientation="VERTICAL" prefHeight="610.0" prefWidth="586.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="233.0" prefWidth="779.0" styleClass="main" stylesheets="@Application.css">
                <children>
@@ -43,11 +43,19 @@
                   <ComboBox fx:id="nameFilterComboBox" editable="true" layoutX="253.0" layoutY="102.0" prefHeight="47.0" prefWidth="327.0" promptText="ファイルのフィルター" />
                   <TextField fx:id="patternTxt" layoutX="14.0" layoutY="181.0" prefHeight="47.0" prefWidth="492.0" promptText="検索文字列" />
                   <Button fx:id="findBtn" layoutX="506.0" layoutY="181.0" mnemonicParsing="false" onAction="#onclickFindBtn" prefHeight="47.0" prefWidth="72.0" text="検索" textFill="WHITE" />
+                  <Label fx:id="message" layoutX="14.0" layoutY="240.0" prefHeight="30.0" prefWidth="562.0" textFill="GAINSBORO" />
                </children>
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="264.0" prefWidth="774.0">
                <children>
-                  <TextArea fx:id="resultTextArea" editable="false" layoutX="-1.0" layoutY="-9.0" prefHeight="358.0" prefWidth="599.0" promptText="検索結果がここに表示されます" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <TableView fx:id="resultView" layoutX="103.0" layoutY="23.0" prefHeight="326.0" prefWidth="591.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <columns>
+                      <TableColumn prefWidth="75.0" text="パス名" />
+                        <TableColumn prefWidth="75.0" text="ファイル名" />
+                      <TableColumn prefWidth="75.0" text="行数" />
+                        <TableColumn prefWidth="303.0" text="内容" />
+                    </columns>
+                  </TableView>
                </children></AnchorPane>
         </items>
       </SplitPane>
