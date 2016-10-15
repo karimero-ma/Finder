@@ -6,6 +6,7 @@ import java.io.LineNumberReader;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -40,38 +41,42 @@ public class Finder {
 		log.debug("ファイル候補の取得終了");
 
 		log.debug("一致する文字列の検索");
-		return paths.stream()
-				.map(path -> parse(fc, path))
-				.collect(Collectors.toList());
+
+		List<List<Result>> results = new ArrayList<>();
+		results = paths.stream()
+			.map(path -> parse(fc, path))
+			.collect(Collectors.toList());
+		
+		List<Result> fixResult = new ArrayList<>();
+		results.stream().forEach(fixResult::addAll);
+		
+		return fixResult;
 	}
 
-	private Result parse(FindCommand fc, Path path) {
-		Result r = new Result();
-		r.setPath(path);
+	private List<Result> parse(FindCommand fc, Path path) {
 
 		String charsetName = null;
 		try {
 			charsetName = getCharset(path);
 		} catch (IOException e) {
 			log.error("faild to retrive a charset {}", path);
-			return r;
+			return Collections.emptyList();
 		}
 		
 		log.debug("ファイルの読み込み開始 {}", path);
 		try (LineNumberReader reader = new LineNumberReader(
 				Files.newBufferedReader(path, Charset.forName(charsetName)))) {
-			List<Result.Line> lines = reader.lines()
-					.filter(line -> fc.match(line))
-					.map(line -> Result.newLine(reader.getLineNumber(), line))
-					.collect(Collectors.toList());
-			r.setLines(lines);
+			return reader.lines()
+				.filter(line -> fc.match(line))
+				.map(line -> new Result()
+						.setPath(path)
+						.setNo(reader.getLineNumber())
+						.setText(line))
+				.collect(Collectors.toList());
 		} catch (IOException e) {
-			log.error("ファイルの解析に失敗しました １{}", path, e);
-			e.printStackTrace();
+			log.error("ファイルの解析に失敗しました {}", path, e);
+			return Collections.emptyList();
 		}
-
-		r.setSuccess(true);
-		return r;
 	}
 
 	public String getCharset(Path path) throws IOException {

@@ -32,6 +32,8 @@ public class UiController {
 	
 	private static final Logger log = LoggerFactory.getLogger(UiController.class);
 	
+	private List<Result> results;
+	
 	private static final ObservableList<String> EXTENTIONS 
 		= FXCollections.observableArrayList(
 		"*.*", "*.txt", "*.html", "*.css", "*.scss"
@@ -124,7 +126,7 @@ public class UiController {
 		}
 		
 		println("検索　開始 …");
-		List<Result> results = new Finder().find(fc);
+		results = new Finder().find(fc);
 		println("検索　終了");
 		
 		log.trace("検索結果の描画開始");
