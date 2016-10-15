@@ -1,20 +1,19 @@
-apply plugin: 'java'
+apply plugin: 'application'
 apply plugin: 'maven'
 
 group = 'jp.co.mk'
 version = '0.0.1-SNAPSHOT'
 
+mainClassName = 'jp.co.km.finder.view.UiLanucher'
 description = """"""
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
-
-
 repositories {
-        
      maven { url "http://repo.maven.apache.org/maven2" }
 }
+
 dependencies {
     compile group: 'commons-lang', name: 'commons-lang', version:'2.6'
     compile group: 'commons-cli', name: 'commons-cli', version:'1.3.1'
