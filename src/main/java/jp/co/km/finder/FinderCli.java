@@ -23,13 +23,12 @@ public class FinderCli {
 		log.info("----------- 結果の出力 -----------");
 		;
 		results.stream()
-			.filter(r -> r.isSuccess() && !r.getLines().isEmpty())
+			.filter(r -> r.isSuccess())
 			.forEach(r->{
 				StringBuilder resultsBuf = new StringBuilder();
 				resultsBuf.append(r.getPath());
 				resultsBuf.append(System.getProperty("line.separator"));
-				r.getLines().stream()
-					.forEach(l -> resultsBuf.append(String.format("%s : %s%s", l.getNo(), l.getText().trim(), System.getProperty("line.separator"))));
+				resultsBuf.append(String.format("%s : %s%s", r.getNo(), r.getText().trim(), System.getProperty("line.separator")));
 				System.out.println(resultsBuf);
 			}
 		);

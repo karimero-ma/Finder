@@ -131,13 +131,12 @@ public class UiController {
 		final List<ResultModel> srcModels = new ArrayList<>();
 		results.stream().forEach(r -> {
 			ResultModelBuilder builder = new ResultModelBuilder();
-			builder.setPath(r.getPath().toString())
-				.setName(r.getPath().getFileName().toString());
-				
-			r.getLines().stream().forEach(l ->{
-				builder.setNo(Long.toString(l.getNo())).setText(l.getText().trim());
-				srcModels.add(builder.build());
-			});
+			builder
+				.setPath(r.getAbsolutePath())
+				.setName(r.getPath().getFileName().toString())
+				.setNo(Long.toString(r.getNo()))
+				.setText(r.getText().trim());
+			srcModels.add(builder.build());
 		});
 		resultView.setItems(FXCollections.observableArrayList(srcModels));
 		log.trace("検索結果の描画開始");
