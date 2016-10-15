@@ -1,5 +1,7 @@
 apply plugin: 'application'
+apply plugin: 'eclipse'
 apply plugin: 'maven'
+apply plugin: 'eclipse'
 
 group = 'jp.co.mk'
 version = '0.0.1-SNAPSHOT'
